@@ -19,7 +19,7 @@ export const API_CONFIG = {
 // 应用配置
 export const APP_CONFIG = {
   // 应用名称
-  APP_NAME: 'My Cloud',
+  APP_NAME: 'Senlin Cloud',
   // 应用描述
   APP_DESCRIPTION: 'Simple and secure personal file management',
   // 默认密码（仅用于开发测试）
