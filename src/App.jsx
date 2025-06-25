@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
+import { API_CONFIG } from './config';
 import './App.css';
-
-const API_BASE = 'http://localhost:8080/api';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,7 +33,7 @@ const App = () => {
 
     try {
       setAuthHeader(pwd);
-      const response = await axios.get(`${API_BASE}/files`);
+      const response = await axios.get(`${API_CONFIG.API_BASE_URL}/files`);
       localStorage.setItem('token', response.data.token);
       setIsLoggedIn(true);
       setPassword(pwd);
@@ -56,7 +55,7 @@ const App = () => {
   // 获取文件列表
   const fetchFiles = async () => {
     try {
-      const response = await axios.get(`${API_BASE}/files`);
+      const response = await axios.get(`${API_CONFIG.API_BASE_URL}/files`);
       setFiles(response.data.files || []);
     } catch (error) {
       setMessage('Failed to get file list');
@@ -74,7 +73,7 @@ const App = () => {
       const formData = new FormData();
       formData.append('file', files[0]);
 
-      await axios.post(`${API_BASE}/upload`, formData, {
+      await axios.post(`${API_CONFIG.API_BASE_URL}/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -100,7 +99,7 @@ const App = () => {
       setLoading(true);
       setMessage('');
       
-      const response = await axios.get(`${API_BASE}/download/${encodeURIComponent(filename)}`, {
+      const response = await axios.get(`${API_CONFIG.API_BASE_URL}/download/${encodeURIComponent(filename)}`, {
         responseType: 'blob',
       });
       
@@ -135,7 +134,7 @@ const App = () => {
     setMessage('');
 
     try {
-      await axios.delete(`${API_BASE}/delete/${encodeURIComponent(filename)}`);
+      await axios.delete(`${API_CONFIG.API_BASE_URL}/delete/${encodeURIComponent(filename)}`);
       setMessage('File deletion successful!');
       fetchFiles();
     } catch (error) {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { FILE_CONFIG } from '../config';
 import './FileCard.css';
 
 const FileCard = ({ file, onDownload, onDelete }) => {
@@ -19,19 +20,7 @@ const FileCard = ({ file, onDownload, onDelete }) => {
   // 获取文件图标
   const getFileIcon = (filename) => {
     const ext = filename.split('.').pop()?.toLowerCase();
-    const iconMap = {
-      pdf: '📄',
-      doc: '📝', docx: '📝',
-      xls: '📊', xlsx: '📊',
-      ppt: '📽️', pptx: '📽️',
-      txt: '📄',
-      jpg: '🖼️', jpeg: '🖼️', png: '🖼️', gif: '🖼️',
-      mp4: '🎥', avi: '🎥', mov: '🎥',
-      mp3: '🎵', wav: '🎵',
-      zip: '📦', rar: '📦', '7z': '📦',
-      default: '📄'
-    };
-    return iconMap[ext] || iconMap.default;
+    return FILE_CONFIG.FILE_ICONS[ext] || FILE_CONFIG.FILE_ICONS.default;
   };
 
   return (

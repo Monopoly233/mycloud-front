@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { APP_CONFIG } from '../config';
 import './LoginPage.css';
 
 const LoginPage = ({ onLogin, loading, message }) => {
@@ -13,8 +14,8 @@ const LoginPage = ({ onLogin, loading, message }) => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h1>🔄 My Cloud</h1>
-          <p>Simple and secure personal file management</p>
+          <h1>🔄 {APP_CONFIG.APP_NAME}</h1>
+          <p>{APP_CONFIG.APP_DESCRIPTION}</p>
         </div>
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import FileList from '../components/FileList';
 import UploadModal from '../components/UploadModal';
+import { API_CONFIG } from '../config';
 import './DashboardPage.css';
 
 const DashboardPage = ({ onLogout }) => {
@@ -14,7 +15,7 @@ const DashboardPage = ({ onLogout }) => {
   const fetchFiles = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/files', {
+      const response = await fetch(`${API_CONFIG.API_BASE_URL}/files`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -36,7 +37,7 @@ const DashboardPage = ({ onLogout }) => {
   // 下载文件
   const handleDownload = async (filename) => {
     try {
-      const response = await fetch(`/api/download/${encodeURIComponent(filename)}`, {
+      const response = await fetch(`${API_CONFIG.API_BASE_URL}/download/${encodeURIComponent(filename)}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -67,7 +68,7 @@ const DashboardPage = ({ onLogout }) => {
     }
 
     try {
-      const response = await fetch(`/api/delete/${encodeURIComponent(filename)}`, {
+      const response = await fetch(`${API_CONFIG.API_BASE_URL}/delete/${encodeURIComponent(filename)}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -116,7 +117,7 @@ const DashboardPage = ({ onLogout }) => {
         throw new Error('Upload failed');
       });
 
-      xhr.open('POST', '/api/upload');
+      xhr.open('POST', `${API_CONFIG.API_BASE_URL}/upload`);
       xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('token')}`);
       xhr.send(formData);
     } catch (error) {
