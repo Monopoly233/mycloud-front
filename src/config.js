@@ -23,7 +23,7 @@ export const APP_CONFIG = {
   // 应用描述
   APP_DESCRIPTION: 'Simple and secure personal file management',
   // 默认密码（仅用于开发测试）
-  DEFAULT_PASSWORD: '123456'
+  DEFAULT_PASSWORD: 'senlin'
 };
 
 // 文件配置
