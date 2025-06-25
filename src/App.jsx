@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
-import { API_CONFIG } from './config';
+import { API_CONFIG, APP_CONFIG } from './config';
 import './App.css';
 
 const App = () => {
@@ -18,6 +18,8 @@ const App = () => {
     const token = localStorage.getItem('token');
     if (token) {
       setIsLoggedIn(true);
+      // 设置axios默认头部
+      axios.defaults.headers.common['X-Password'] = token;
     }
   }, []);
 
@@ -34,7 +36,7 @@ const App = () => {
     try {
       setAuthHeader(pwd);
       const response = await axios.get(`${API_CONFIG.API_BASE_URL}/files`);
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', pwd); // 存储密码作为token
       setIsLoggedIn(true);
       setPassword(pwd);
       setFiles(response.data.files || []);
@@ -147,6 +149,7 @@ const App = () => {
   // 登出处理
   const handleLogout = () => {
     localStorage.removeItem('token');
+    delete axios.defaults.headers.common['X-Password'];
     setIsLoggedIn(false);
     setPassword('');
     setMessage('');

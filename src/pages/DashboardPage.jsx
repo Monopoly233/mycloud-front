@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import FileList from '../components/FileList';
 import UploadModal from '../components/UploadModal';
-import { API_CONFIG } from '../config';
+import { API_CONFIG, APP_CONFIG } from '../config';
 import './DashboardPage.css';
 
 const DashboardPage = ({ onLogout }) => {
@@ -17,7 +17,7 @@ const DashboardPage = ({ onLogout }) => {
     try {
       const response = await fetch(`${API_CONFIG.API_BASE_URL}/files`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'X-Password': APP_CONFIG.DEFAULT_PASSWORD
         }
       });
       
@@ -39,7 +39,7 @@ const DashboardPage = ({ onLogout }) => {
     try {
       const response = await fetch(`${API_CONFIG.API_BASE_URL}/download/${encodeURIComponent(filename)}`, {
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'X-Password': APP_CONFIG.DEFAULT_PASSWORD
         }
       });
       
@@ -71,7 +71,7 @@ const DashboardPage = ({ onLogout }) => {
       const response = await fetch(`${API_CONFIG.API_BASE_URL}/delete/${encodeURIComponent(filename)}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'X-Password': APP_CONFIG.DEFAULT_PASSWORD
         }
       });
       
@@ -118,7 +118,7 @@ const DashboardPage = ({ onLogout }) => {
       });
 
       xhr.open('POST', `${API_CONFIG.API_BASE_URL}/upload`);
-      xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('token')}`);
+      xhr.setRequestHeader('X-Password', APP_CONFIG.DEFAULT_PASSWORD);
       xhr.send(formData);
     } catch (error) {
       setMessage('Upload failed');
