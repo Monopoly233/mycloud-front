@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
@@ -6,13 +6,21 @@ import './App.css';
 
 const API_BASE = 'http://localhost:8080/api';
 
-function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [password, setPassword] = useState('');
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [showUploadModal, setShowUploadModal] = useState(false);
+
+  // 检查登录状态
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   // 设置axios默认headers
   const setAuthHeader = (pwd) => {
@@ -27,17 +35,18 @@ function App() {
     try {
       setAuthHeader(pwd);
       const response = await axios.get(`${API_BASE}/files`);
-      setIsAuthenticated(true);
+      localStorage.setItem('token', response.data.token);
+      setIsLoggedIn(true);
       setPassword(pwd);
       setFiles(response.data.files || []);
-      setMessage('登录成功！');
+      setMessage('Login successful!');
     } catch (error) {
       if (error.response?.status === 401) {
-        setMessage('密码错误，请重试');
+        setMessage('Invalid password');
       } else if (error.code === 'ERR_NETWORK') {
-        setMessage('无法连接到服务器，请检查后端是否启动');
+        setMessage('Unable to connect to the server, please check if the backend is running');
       } else {
-        setMessage(`登录失败: ${error.message}`);
+        setMessage(`Login failed: ${error.message}`);
       }
     } finally {
       setLoading(false);
@@ -50,7 +59,7 @@ function App() {
       const response = await axios.get(`${API_BASE}/files`);
       setFiles(response.data.files || []);
     } catch (error) {
-      setMessage('获取文件列表失败');
+      setMessage('Failed to get file list');
     }
   };
 
@@ -75,11 +84,11 @@ function App() {
         },
       });
 
-      setMessage('文件上传成功！');
+      setMessage('File upload successful!');
       fetchFiles();
       setShowUploadModal(false);
     } catch (error) {
-      setMessage('文件上传失败');
+      setMessage('File upload failed');
     } finally {
       setLoading(false);
     }
@@ -104,12 +113,12 @@ function App() {
       link.remove();
       window.URL.revokeObjectURL(url);
       
-      setMessage('文件下载成功！');
+      setMessage('File download successful!');
     } catch (error) {
       if (error.response?.status === 401) {
-        setMessage('下载失败：密码验证错误');
+        setMessage('Download failed: Password verification error');
       } else {
-        setMessage('文件下载失败');
+        setMessage('File download failed');
       }
     } finally {
       setLoading(false);
@@ -118,7 +127,7 @@ function App() {
 
   // 删除文件
   const handleDelete = async (filename) => {
-    if (!window.confirm(`确定要删除文件 "${filename}" 吗？`)) {
+    if (!window.confirm(`Are you sure you want to delete file "${filename}"?`)) {
       return;
     }
 
@@ -127,18 +136,19 @@ function App() {
 
     try {
       await axios.delete(`${API_BASE}/delete/${encodeURIComponent(filename)}`);
-      setMessage('文件删除成功！');
+      setMessage('File deletion successful!');
       fetchFiles();
     } catch (error) {
-      setMessage('文件删除失败');
+      setMessage('File deletion failed');
     } finally {
       setLoading(false);
     }
   };
 
-  // 退出登录
+  // 登出处理
   const handleLogout = () => {
-    setIsAuthenticated(false);
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
     setPassword('');
     setMessage('');
     setFiles([]);
@@ -155,31 +165,31 @@ function App() {
     setShowUploadModal(false);
   };
 
-  if (!isAuthenticated) {
-    return (
-      <LoginPage
-        onLogin={handleLogin}
-        loading={loading}
-        message={message}
-      />
-    );
-  }
-
   return (
-    <DashboardPage
-      files={files}
-      loading={loading}
-      message={message}
-      showUploadModal={showUploadModal}
-      onUpload={handleFileUpload}
-      onDownload={handleDownload}
-      onDelete={handleDelete}
-      onRefresh={fetchFiles}
-      onLogout={handleLogout}
-      onShowUploadModal={handleShowUploadModal}
-      onHideUploadModal={handleHideUploadModal}
-    />
+    <div className="app">
+      {isLoggedIn ? (
+        <DashboardPage
+          files={files}
+          loading={loading}
+          message={message}
+          showUploadModal={showUploadModal}
+          onUpload={handleFileUpload}
+          onDownload={handleDownload}
+          onDelete={handleDelete}
+          onRefresh={fetchFiles}
+          onLogout={handleLogout}
+          onShowUploadModal={handleShowUploadModal}
+          onHideUploadModal={handleHideUploadModal}
+        />
+      ) : (
+        <LoginPage
+          onLogin={handleLogin}
+          loading={loading}
+          message={message}
+        />
+      )}
+    </div>
   );
-}
+};
 
 export default App;

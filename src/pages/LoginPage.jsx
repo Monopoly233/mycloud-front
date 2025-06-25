@@ -13,24 +13,24 @@ const LoginPage = ({ onLogin, loading, message }) => {
     <div className="login-container">
       <div className="login-card">
         <div className="login-header">
-          <h1>🔄 我的云盘</h1>
-          <p>简单、安全的个人文件管理</p>
+          <h1>🔄 My Cloud</h1>
+          <p>Simple and secure personal file management</p>
         </div>
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label htmlFor="password">密码</label>
+            <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
               className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="请输入密码"
+              placeholder="Enter password"
               required
             />
           </div>
           <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
-            {loading ? '登录中...' : '登录'}
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
         {message && <div className="message error">{message}</div>}

@@ -52,7 +52,7 @@ const UploadModal = ({ onUpload, onClose }) => {
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
-          <h3>上传文件</h3>
+          <h3>Upload File</h3>
           <button 
             className="modal-close"
             onClick={onClose}
@@ -70,7 +70,7 @@ const UploadModal = ({ onUpload, onClose }) => {
             onClick={() => fileInputRef.current?.click()}
           >
             <div className="upload-icon">📁</div>
-            <p>点击选择文件或拖拽文件到此处</p>
+            <p>Click to select file or drag and drop here</p>
             <input
               ref={fileInputRef}
               type="file"

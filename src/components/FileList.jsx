@@ -6,23 +6,23 @@ const FileList = ({ files, loading, onDownload, onDelete, onRefresh }) => {
   return (
     <div className="file-list-container">
       <div className="content-header">
-        <h2>文件列表</h2>
+        <h2>File List</h2>
         <button 
           className="btn btn-outline"
           onClick={onRefresh}
           disabled={loading}
         >
-          🔄 刷新
+          🔄 Refresh
         </button>
       </div>
 
-      {loading && <div className="loading">加载中...</div>}
+      {loading && <div className="loading">Loading...</div>}
       
       {files.length === 0 ? (
         <div className="empty-state">
           <div className="empty-icon">📁</div>
-          <h3>暂无文件</h3>
-          <p>点击"上传文件"按钮开始使用</p>
+          <h3>No Files</h3>
+          <p>Click "Upload File" button to get started</p>
         </div>
       ) : (
         <div className="file-grid">

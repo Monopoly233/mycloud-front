@@ -13,7 +13,7 @@ const FileCard = ({ file, onDownload, onDelete }) => {
 
   // 格式化时间
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleString('zh-CN');
+    return new Date(dateString).toLocaleString('en-US');
   };
 
   // 获取文件图标
@@ -47,14 +47,14 @@ const FileCard = ({ file, onDownload, onDelete }) => {
         <button
           className="btn btn-sm btn-success"
           onClick={() => onDownload(file.name)}
-          title="下载"
+          title="Download"
         >
           ⬇️
         </button>
         <button
           className="btn btn-sm btn-danger"
           onClick={() => onDelete(file.name)}
-          title="删除"
+          title="Delete"
         >
           🗑️
         </button>
