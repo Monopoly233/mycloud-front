@@ -1,25 +1,25 @@
 // API配置
 export const API_CONFIG = {
-  // 服务器IP地址
-  SERVER_IP: '3.15.237.125',
-  // 服务器端口
-  SERVER_PORT: '8080',
+  // 服务器IP地址 - 使用Cloudflare Tunnel公共URL
+  SERVER_IP: 'pads-dynamic-responses-debug.trycloudflare.com',
+  // 服务器端口 - Cloudflare Tunnel使用HTTPS，端口为443
+  SERVER_PORT: '443',
   // API基础路径
   API_BASE_PATH: '/api',
   // 完整API基础URL
   get API_BASE_URL() {
-    return `http://${this.SERVER_IP}:${this.SERVER_PORT}${this.API_BASE_PATH}`;
+    return `https://${this.SERVER_IP}${this.API_BASE_PATH}`;
   },
   // 服务器完整地址
   get SERVER_URL() {
-    return `http://${this.SERVER_IP}:${this.SERVER_PORT}`;
+    return `https://${this.SERVER_IP}`;
   }
 };
 
 // 应用配置
 export const APP_CONFIG = {
   // 应用名称
-  APP_NAME: 'Senlin Cloud',
+  APP_NAME: 'My Cloud',
   // 应用描述
   APP_DESCRIPTION: 'Simple and secure personal file management',
   // 默认密码（仅用于开发测试）
