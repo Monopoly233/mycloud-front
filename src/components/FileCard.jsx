@@ -2,7 +2,7 @@ import React from 'react';
 import { FILE_CONFIG } from '../config';
 import './FileCard.css';
 
-const FileCard = ({ file, onDownload, onDelete }) => {
+const FileCard = ({ file, onDownload, onDelete, onPreview }) => {
   // 格式化文件大小
   const formatFileSize = (bytes) => {
     if (bytes === 0) return '0 Bytes';
@@ -23,6 +23,25 @@ const FileCard = ({ file, onDownload, onDelete }) => {
     return FILE_CONFIG.FILE_ICONS[ext] || FILE_CONFIG.FILE_ICONS.default;
   };
 
+  // 判断文件是否可预览
+  const isPreviewable = (filename) => {
+    const ext = filename.split('.').pop()?.toLowerCase();
+    const previewableTypes = [
+      // 图片
+      'jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'webp', 'ico',
+      // 文本
+      'txt', 'md', 'json', 'xml', 'html', 'htm', 'css', 'js', 'jsx', 'ts', 'tsx', 
+      'py', 'java', 'cpp', 'c', 'cs', 'php', 'rb', 'go', 'rs', 'swift', 'kt', 'dart',
+      // 视频
+      'mp4', 'avi', 'mov', 'mkv', 'wmv', 'flv', 'webm', 'm4v',
+      // 音频
+      'mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a', 'wma',
+      // PDF
+      'pdf'
+    ];
+    return previewableTypes.includes(ext);
+  };
+
   return (
     <div className="file-card">
       <div className="file-icon">{getFileIcon(file.name)}</div>
@@ -33,6 +52,15 @@ const FileCard = ({ file, onDownload, onDelete }) => {
         </div>
       </div>
       <div className="file-actions">
+        {isPreviewable(file.name) && (
+          <button
+            className="btn btn-sm btn-info"
+            onClick={() => onPreview(file)}
+            title="Preview"
+          >
+            👁️
+          </button>
+        )}
         <button
           className="btn btn-sm btn-success"
           onClick={() => onDownload(file.name)}

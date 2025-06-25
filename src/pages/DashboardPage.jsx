@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import FileList from '../components/FileList';
 import UploadModal from '../components/UploadModal';
+import PreviewModal from '../components/PreviewModal';
 import { API_CONFIG, APP_CONFIG } from '../config';
 import './DashboardPage.css';
 
@@ -9,6 +10,8 @@ const DashboardPage = ({ onLogout }) => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [previewFile, setPreviewFile] = useState(null);
   const [message, setMessage] = useState('');
 
   // 获取文件列表
@@ -32,6 +35,18 @@ const DashboardPage = ({ onLogout }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // 预览文件
+  const handlePreview = (file) => {
+    setPreviewFile(file);
+    setShowPreviewModal(true);
+  };
+
+  // 关闭预览
+  const handleClosePreview = () => {
+    setShowPreviewModal(false);
+    setPreviewFile(null);
   };
 
   // 下载文件
@@ -151,6 +166,7 @@ const DashboardPage = ({ onLogout }) => {
           loading={loading}
           onDownload={handleDownload}
           onDelete={handleDelete}
+          onPreview={handlePreview}
           onRefresh={fetchFiles}
         />
       </main>
@@ -159,6 +175,15 @@ const DashboardPage = ({ onLogout }) => {
         <UploadModal
           onUpload={handleUpload}
           onClose={() => setShowUploadModal(false)}
+        />
+      )}
+
+      {showPreviewModal && previewFile && (
+        <PreviewModal
+          file={previewFile}
+          isOpen={showPreviewModal}
+          onClose={handleClosePreview}
+          password={APP_CONFIG.DEFAULT_PASSWORD}
         />
       )}
 

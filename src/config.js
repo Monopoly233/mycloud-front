@@ -1,7 +1,7 @@
 // API配置
 export const API_CONFIG = {
   // 服务器IP地址 - 使用Cloudflare Tunnel公共URL
-  SERVER_IP: 'ky-answering-steering-threatening.trycloudflare.com',
+  SERVER_IP: 'kentucky-kenneth-refined-forwarding.trycloudflare.com',
   // 服务器端口 - Cloudflare Tunnel使用HTTPS，端口为443
   SERVER_PORT: '443',
   // API基础路径

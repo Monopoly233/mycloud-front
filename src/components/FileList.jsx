@@ -2,7 +2,7 @@ import React from 'react';
 import FileCard from './FileCard';
 import './FileList.css';
 
-const FileList = ({ files, loading, onDownload, onDelete, onRefresh }) => {
+const FileList = ({ files, loading, onDownload, onDelete, onPreview, onRefresh }) => {
   return (
     <div className="file-list-container">
       <div className="content-header">
@@ -32,6 +32,7 @@ const FileList = ({ files, loading, onDownload, onDelete, onRefresh }) => {
               file={file}
               onDownload={onDownload}
               onDelete={onDelete}
+              onPreview={onPreview}
             />
           ))}
         </div>

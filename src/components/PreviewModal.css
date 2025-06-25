@@ -1,0 +1,260 @@
+.preview-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.preview-modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  max-width: 90vw;
+  max-height: 90vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.preview-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.preview-modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #111827;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 400px;
+}
+
+.preview-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-close-btn:hover {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.preview-modal-content {
+  flex: 1;
+  overflow: auto;
+  padding: 0;
+  position: relative;
+}
+
+/* 加载状态 */
+.preview-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  font-size: 16px;
+  color: #6b7280;
+}
+
+/* 错误状态 */
+.preview-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  font-size: 16px;
+  color: #dc2626;
+  text-align: center;
+  padding: 20px;
+}
+
+/* 图片预览 */
+.preview-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 20px;
+}
+
+.preview-image img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 文本预览 */
+.preview-text {
+  padding: 24px;
+  background: #f9fafb;
+  min-height: 400px;
+}
+
+.preview-text pre {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  margin: 0;
+  overflow-x: auto;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #374151;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* 视频预览 */
+.preview-video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  min-height: 400px;
+}
+
+.preview-video video {
+  max-width: 100%;
+  max-height: 70vh;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 音频预览 */
+.preview-audio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: 200px;
+}
+
+.preview-audio audio {
+  width: 100%;
+  max-width: 500px;
+}
+
+/* PDF预览 */
+.preview-pdf {
+  height: 70vh;
+  width: 100%;
+}
+
+.preview-pdf iframe {
+  border: none;
+  border-radius: 0;
+}
+
+/* 其他文件类型 */
+.preview-other {
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.preview-other .file-info {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.preview-other .file-info h3 {
+  margin: 0 0 16px 0;
+  color: #111827;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.preview-other .file-info p {
+  margin: 8px 0;
+  color: #374151;
+  font-size: 14px;
+}
+
+.preview-other .file-info strong {
+  color: #111827;
+  font-weight: 600;
+}
+
+.preview-other .download-section {
+  padding: 24px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+.preview-other .download-section p {
+  margin: 0 0 16px 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .preview-modal {
+    max-width: 95vw;
+    max-height: 95vh;
+  }
+  
+  .preview-modal-header {
+    padding: 16px 20px;
+  }
+  
+  .preview-modal-header h2 {
+    font-size: 16px;
+    max-width: 250px;
+  }
+  
+  .preview-text {
+    padding: 16px;
+  }
+  
+  .preview-text pre {
+    font-size: 12px;
+    padding: 12px;
+  }
+  
+  .preview-other {
+    padding: 20px 16px;
+  }
+  
+  .preview-other .file-info {
+    padding: 16px;
+  }
+  
+  .preview-other .download-section {
+    padding: 16px;
+  }
+} 
