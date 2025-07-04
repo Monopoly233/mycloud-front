@@ -3,7 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import SimpleView from './components/SimpleView.jsx'
+import PrinterView from './components/PrinterView.jsx'
 import UserAgentTest from './components/UserAgentTest.jsx'
+import PrinterTest from './components/PrinterTest.jsx'
 
 // User-Agent detection for older devices
 const isLegacyDevice = () => {
@@ -45,7 +47,14 @@ const isLegacyDevice = () => {
   const isLegacy = legacyPatterns.some(pattern => pattern.test(userAgent));
   
   // Additional checks for specific device types
-  const isPrinter = userAgent.includes('printer') || userAgent.includes('print');
+  const isPrinter = userAgent.includes('printer') || userAgent.includes('print') || 
+                   userAgent.includes('hp') || userAgent.includes('canon') || 
+                   userAgent.includes('epson') || userAgent.includes('brother') ||
+                   userAgent.includes('samsung') || userAgent.includes('xerox') ||
+                   userAgent.includes('ricoh') || userAgent.includes('konica') ||
+                   userAgent.includes('sharp') || userAgent.includes('lexmark') ||
+                   userAgent.includes('kyocera') || userAgent.includes('oki') ||
+                   userAgent.includes('fuji') || userAgent.includes('minolta');
   const isEmbedded = userAgent.includes('embedded') || userAgent.includes('smart-tv');
   const isOldMobile = userAgent.includes('mobile') && (
     userAgent.includes('android 2.') || 
@@ -64,6 +73,32 @@ const isLegacyDevice = () => {
   console.log('Final Result:', isLegacy || isPrinter || isEmbedded || isOldMobile);
   
   return isLegacy || isPrinter || isEmbedded || isOldMobile;
+};
+
+// Check if device is specifically a printer
+const isPrinterDevice = () => {
+  const userAgent = navigator.userAgent.toLowerCase();
+  
+  const printerPatterns = [
+    /printer/,
+    /print/,
+    /hp/,
+    /canon/,
+    /epson/,
+    /brother/,
+    /samsung.*printer/,
+    /xerox/,
+    /ricoh/,
+    /konica/,
+    /sharp.*printer/,
+    /lexmark/,
+    /kyocera/,
+    /oki/,
+    /fuji.*printer/,
+    /minolta/
+  ];
+  
+  return printerPatterns.some(pattern => pattern.test(userAgent));
 };
 
 // Check for modern browser features
@@ -88,15 +123,27 @@ const getAppComponent = () => {
     return UserAgentTest;
   }
   
+  if (testMode === 'printer') {
+    console.log('Printer test mode enabled');
+    return PrinterTest;
+  }
+  
   // Force simple view for testing (uncomment to test)
-  return SimpleView;
+  // return SimpleView;
   
   // Always show debug info for now
   const isLegacy = isLegacyDevice();
+  const isPrinter = isPrinterDevice();
   console.log('=== Device Detection Debug ===');
   console.log('User-Agent:', navigator.userAgent);
   console.log('Is Legacy Device:', isLegacy);
+  console.log('Is Printer Device:', isPrinter);
   console.log('Has Modern Features:', hasModernFeatures());
+  
+  if (isPrinter) {
+    console.log('Printer device detected, using PrinterView');
+    return PrinterView;
+  }
   
   if (isLegacy) {
     console.log('Legacy device detected, using SimpleView');
