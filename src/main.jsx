@@ -89,7 +89,7 @@ const getAppComponent = () => {
   }
   
   // Force simple view for testing (uncomment to test)
-  // return SimpleView;
+  return SimpleView;
   
   // Always show debug info for now
   const isLegacy = isLegacyDevice();
